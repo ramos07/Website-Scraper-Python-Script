@@ -1,4 +1,4 @@
-# Website Scraper Python Script
+# Website Scraper Python Script :computer: :snake:
 
 ## A Python script that scrapes specific content off a web page, saves the content into a database, and creates a JSON file from that data.
 
@@ -8,7 +8,7 @@ I wrote this Python script to scrape a website for Nipsey Hussle quotes. After i
 
 ---
 
-### Files
+### Files :file_folder:
 
 -   `quote_scraper.py`
     -   Script that scrapes the website, extracts the data that is needed, cleans the data, saves the data into a SQLite3 database, formats data as JSON, creates a JSON files and writes that formatted data to it.
@@ -19,7 +19,7 @@ I wrote this Python script to scrape a website for Nipsey Hussle quotes. After i
 
 ---
 
-### Packages
+### Packages :package:
 
 -   These are the packages that were used, some are already preinstalled.
 

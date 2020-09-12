@@ -12,7 +12,7 @@ conn = sqlite3.connect(db_name)
 c = conn.cursor() 
 
 #The URL of the site I scraped the quotes from 
-URL = 'https://www.awakenthegreatnesswithin.com/35-inspirational-nipsey-hussle-quotes-on-success/'
+URL = 'https://everydaypower.com/nipsey-hussle-quotes/'
 
 
 #Create table to hold the quotes
@@ -31,8 +31,8 @@ def scrape_website(website_url):
         # Soup object that will parse the content from the page as html
         soup = BeautifulSoup(page.content, 'html.parser')
         # Results is the specific data I want to retrieve from the site (view data prehand with dev tools on Chrome, Firefox, etc.)
-        results = soup.find_all('div', class_='td-post-content')
-
+        results = soup.find_all('div', id='mvp-content-main')
+        # print(results)
         print("Data successfully extracted!")
     except Exception as e:
         print("There was an error scraping the website: ", (e))
@@ -53,15 +53,17 @@ def insertQuote(quote):
 # Using a bit of regex I was able to 
 def tidy_data(results):
     for element in results:
-        quotes = element.find_all("p", class_="p2") # The quotes extracted from the <p> elements
-        more_quotes = element.find_all("h2", class_="p3") # The nested quotes that were inside the <h3> tags
-        all_quotes = quotes[1:] + more_quotes # Concatenate both lists
-        for quote in all_quotes:
+        quotes = element.find_all("p") # The quotes extracted from the <p> elements
+        # print(quotes)
+        # more_quotes = element.find_all("h2", class_="p3") # The nested quotes that were inside the <h3> tags
+        # all_quotes = quotes[1:] + more_quotes # Concatenate both lists
+        # for quote in all_quotes:
+        for quote in quotes[7:-3]:
             raw_quote = quote.text # The quote as extracted from the <p> element
             regex = re.compile('[^a-zA-Z. ]') # Using Regex to only get the characters we want (there were some numbers in there.)
             new_quote = regex.sub('', raw_quote).replace("Nipsey Hussle", " ") # Replace our string with our Regex stripped version then replace a certain string
             insertQuote(new_quote[2:]) # Calling the insertQuote function to insert the quote into the DB.
-            
+            # print(new_quote[2:]+"\n")
             # If the quote is None then just skip it and continue.
             if None in (quote):
                 continue
